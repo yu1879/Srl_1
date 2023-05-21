@@ -26,13 +26,78 @@ if ((int)$month + 1 > 12) {
 }
 
 $connect = connect_sql();
-$condition = "where year='$year' and month='$month' and unit='$unit' order by version desc"; // add projectid
-$every_month = select($connect, 'PU021', '*', $condition);
-$condition = "where year='$year' and season='$month' and unit='$unit' order by version desc"; // add projectid
-$efficient = select($connect, 'PU023', '*', $condition);
+$data = array();
+if($project === '112-113年5G智慧學習推動計畫')
+{
+    $condition = "where year='$year' and month='$month' and unit='$unit' order by version desc"; // add projectid
+    $PU021 = select($connect, 'PU021', '*', $condition);
+    $condition = "where year='$year' and season='$month' and unit='$unit' order by version desc"; // add projectid
+    $PU023 = select($connect, 'PU023', '*', $condition);
 
-$display_every_month = !($status === '0' xor count($every_month) === 0);
-$display_efficient = in_array($month, array('3', '6', '9', '12')) && !($status === '0' xor count($efficient) === 0);
+    if(!($status === '0' xor count($PU021) === 0))
+    {
+        $data['縣市教育處每月填報'] = $PU021;
+    }
+    if(in_array($month, array('3', '6', '9', '12')) && !($status === '0' xor count($PU023) === 0))
+    {
+        $data['效益執行說明（季報）'] = $PU023;
+    }
+
+    $pages = array(
+        '縣市教育處每月填報' => 'y06.php',
+        '效益執行說明（季報）' => 'y07.php'
+    );
+}
+else if($project === '112-113年5G新科技學習示範學校計畫')
+{
+    $condition = "where year='$year' and month='$month' and unit='$unit' order by version desc";
+    $goal_1 = select($connect, 'goal_1', '*', $condition);
+    $teacher_1 = select($connect, 'teacher_1', '*', $condition);
+    $around = select($connect, 'around', '*', $condition);
+    $lesson = select($connect, 'lesson', '*', $condition);
+    $public_1 = select($connect, 'public_1', '*', $condition);
+    $conseling_1 = select($connect, 'conseling_1', '*', $condition);
+    $result_1 = select($connect, 'result_1', '*', $condition);
+
+    if(!($status === '0' xor count($goal_1) === 0))
+    {
+        $data['目標值'] = $goal_1;
+    }
+    if(!($status === '0' xor count($teacher_1) === 0))
+    {
+        $data['教師培訓'] = $teacher_1;
+    }
+    if(!($status === '0' xor count($around) === 0))
+    {
+        $data['新科技應用'] = $around;
+    }
+    if(!($status === '0' xor count($lesson) === 0))
+    {
+        $data['共學課程實施'] = $lesson;
+    }
+    if(!($status === '0' xor count($public_1) === 0))
+    {
+        $data['公開觀課'] = $public_1;
+    }
+    if(!($status === '0' xor count($conseling_1) === 0))
+    {
+        $data['入校輔導'] = $conseling_1;
+    }
+    if(!($status === '0' xor count($result_1) === 0))
+    {
+        $data['成果展現與推廣活動'] = $result_1;
+    }
+
+    $pages = array(
+        '目標值' => 'y21.php',
+        '教師培訓' => 'y22.php',
+        '新科技應用' => 'y23.php',
+        '共學課程實施' => 'y24.php',
+        '公開觀課' => 'y25.php',
+        '入校輔導' => 'y26.php',
+        '成果展現與推廣活動' => 'y27.php'
+    );
+}
 ?>
 
 <!DOCTYPE html>
@@ -71,7 +136,7 @@ $display_efficient = in_array($month, array('3', '6', '9', '12')) && !($status =
                         <p class="text-base">計畫名稱：</p>
                         <select class="select select-bordered select-sm w-full mt-1" name="project" onChange="auto_submit()">
                             <option value='112-113年5G智慧學習推動計畫' <?php if ($project === '112-113年5G智慧學習推動計畫') echo 'selected' ?>>112-113年5G智慧學習推動計畫</option>
-                            <!-- <option value='112-113年數位學習推動計畫' <?php if ($project === '112-113年數位學習推動計畫') echo 'selected' ?>>112-113年數位學習推動計畫</option> -->
+                            <option value='112-113年5G新科技學習示範學校計畫' <?php if ($project === '112-113年5G新科技學習示範學校計畫') echo 'selected' ?>>112-113年5G新科技學習示範學校計畫</option>
                         </select>
                     </div>
                     <div class="flex flex-col gap-2 bg-base-100 rounded-lg p-4">
@@ -106,7 +171,7 @@ $display_efficient = in_array($month, array('3', '6', '9', '12')) && !($status =
                     </div>
                 </div>
             </form>
-            <?php if (!$display_every_month && !$display_efficient) { ?>
+            <?php if (count($data) == 0) { ?>
                 <div class="p-8">
                     <p class="text-2xl text-error">查無資料</p>
                 </div>
@@ -124,20 +189,23 @@ $display_efficient = in_array($month, array('3', '6', '9', '12')) && !($status =
                             </tr>
                         </thead>
                         <tbody>
-                            <?php if ($display_every_month) { ?>
+                            <?php
+                            foreach($data as $name => $table)
+                            {
+                            ?>
                                 <tr>
                                     <th>#</th>
-                                    <td>縣市教育處每月填報</td>
+                                    <td><?=$name?></td>
                                     <td><?= $year ?></td>
                                     <td><?= $month ?>月</td>
                                     <td><?= $deadline ?></td>
                                     <td>
-                                        <form method="post" action="./y06.php">
+                                        <form method="post" action="./<?=$pages[$name]?>">
                                             <input type="hidden" name="project" value="<?= $project ?>">
                                             <input type="hidden" name="year" value="<?= $year ?>">
                                             <input type="hidden" name="month" value="<?= $month ?>">
                                             <div class="flex gap-2">
-                                                <button class="btn btn-sm w-24"><?= $status === '1' && $every_month[0]['state'] === '-1' ? '未辦理' : ($status === '1' ? '修改' : '填報') ?></button>
+                                                <button class="btn btn-sm w-24"><?= $status === '1' && $table[0]['state'] === '-1' ? '未辦理' : ($status === '1' ? '修改' : '填報') ?></button>
                                                 <?php if ($status === '0') { ?>
                                                     <button class="btn btn-sm w-24" name="state" value="-1">未辦理</button>
                                                 <?php } ?>
@@ -145,29 +213,9 @@ $display_efficient = in_array($month, array('3', '6', '9', '12')) && !($status =
                                         </form>
                                     </td>
                                 </tr>
-                            <?php } ?>
-                            <?php if ($display_efficient) { ?>
-                                <tr class="table_row">
-                                    <th>#</th>
-                                    <td>效益執行說明（季報）</td>
-                                    <td><?= $year ?></td>
-                                    <td><?= $month ?>月</td>
-                                    <td><?= $deadline ?></td>
-                                    <td>
-                                        <form method="post" action="./y07.php">
-                                            <input type="hidden" name="project" value="<?= $project ?>">
-                                            <input type="hidden" name="year" value="<?= $year ?>">
-                                            <input type="hidden" name="month" value="<?= $month ?>">
-                                            <div class="flex gap-2">
-                                                <button class="btn btn-sm w-24"><?= $status === '1' && $efficient[0]['state'] === '-1' ? '未辦理' : ($status === '1' ? '修改' : '填報') ?></button>
-                                                <?php if ($status === '0') { ?>
-                                                    <button class="btn btn-sm w-24" name="state" value="-1">未辦理</button>
-                                                <?php } ?>
-                                            </div>
-                                        </form>
-                                    </td>
-                                </tr>
-                            <?php } ?>
+                            <?php
+                            }
+                            ?>
                         </tbody>
                         <tfoot>
                             <tr>
