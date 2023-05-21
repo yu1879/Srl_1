@@ -8,7 +8,7 @@ function connect_sql()
 
     $connect = new mysqli($server_name, $username, $password, $db_name);
     if ($connect->connect_error) {
-        die("��Ʈw�s�u���~�G{$connect->connect_error}");
+        die($connect->connect_error);
     }
     $connect->query('SET NAMES UTF8');
     $connect->query('SET time_zone = "+8:00"');

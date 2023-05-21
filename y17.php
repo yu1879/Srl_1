@@ -24,13 +24,12 @@ $referer = $_SERVER['HTTP_REFERER'] ?? null;
 $readonly = false;
 
 $connect = connect_sql();
-// $data = select(
-//   $connect,
-//   'application',
-//   '*',
-//   "where project='$project' and year='$year' and month='$month'" . (is_null($school_id) ? '' : " and unit='$school_id'") . " order by version desc"
-// );
-$data = array();
+$data = select(
+  $connect,
+  'application',
+  '*',
+  "where project='$project' and year='$year' and month='$month'" . (is_null($school_id) ? '' : " and unit='$school_id'") . " order by version desc"
+);
 
 $people = $data[0]['people'] ?? null;
 $units = $data[0]['units'] ?? null;
