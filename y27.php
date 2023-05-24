@@ -136,6 +136,7 @@ if (!$readonly) {
             </label>
             <?php if (!$readonly) { ?>
               <input id="activ" class="file-input file-input-bordered file-input-sm w-full" type="file" name="activ" required accept=".pdf" onChange="set_text('activ')">
+              <input class="input input-sm input-bordered w-full" type="text" name="video1" placeholder="輸入連結" value="<?= $video1 ?>" <?php if ($readonly) echo 'disabled' ?> />
               <p id="activ_text" class="text-base opacity-50"></p>
             <?php } ?>
             <?php if ($activ) {

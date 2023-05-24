@@ -218,11 +218,14 @@ if (!$readonly) {
             <?php } ?>
           </div>
           <div class="flex flex-col gap-2 bg-base-100 rounded-lg p-4">
-            <label class="label gap-2">
-              <span class="label-text flex-1">共學課程開課實施日期：</span>
-              <span class="label-text-alt text-error">必填欄位</span>
-            </label>
-            <input class="input input-sm input-bordered w-full" type="text" name="date" required value="<?= $date ?>" <?php if ($readonly) echo 'disabled' ?> />
+                    <div class="flex flex-col gap-2 bg-base-100 rounded-lg p-4">
+                        <label class="label gap-2">
+                            <span class="label-text flex-1">共學課程開課實施日期
+(時段)：</span>
+                            <span class="label-text-alt text-error">必填欄位</span>
+                        </label>
+                        <input class="input input-sm input-bordered w-full" type="datetime-local" name="times1" required value="<?= date('Y-m-d H:i', strtotime($times1 ?? date('Y-m-d H:i'))) ?>" <?php if ($readonly) echo 'disabled' ?> />
+                    </div>
           </div>
         </div>
 

@@ -139,7 +139,7 @@ if (!$readonly) {
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-2">
             <div class="flex flex-col gap-2 bg-base-100 rounded-lg p-4">
               <label class="label gap-2">
-                <span class="label-text flex-1">標竿課堂實施數(包含PBL實施節數)：</span>
+                <span class="label-text flex-1">標竿課堂實施數(包含PBL實施節數)</span>
                 <span class="label-text-alt text-error">必填欄位</span>
               </label>
               <input class="input input-sm input-bordered w-full" type="number" min="0" name="class_count" required value="<?= $class_count ?>" <?php if ($readonly) echo 'disabled' ?> />
@@ -147,7 +147,7 @@ if (!$readonly) {
             <div class="flex flex-col gap-2 bg-base-100 rounded-lg p-4">
               <label class="label gap-2">
                 <span class="label-text flex-1">導入教學學科領域(請填科目)：</span>
-                <span class="label-text-alt text-error">必填欄位</span>
+                <!-- <span class="label-text-alt text-error">必填欄位</span> -->
               </label>
               <input class="input input-sm input-bordered w-full" type="text" name="field" required value="<?= $field ?>" <?php if ($readonly) echo 'disabled' ?> />
             </div>
@@ -156,7 +156,7 @@ if (!$readonly) {
             <div class="flex flex-col gap-2 bg-base-100 rounded-lg p-4">
               <label class="label gap-2">
                 <span class="label-text flex-1">製作示範/特色教學影片：</span>
-                <span class="label-text-alt text-error">必填欄位</span>
+                <!-- <span class="label-text-alt text-error">必填欄位</span> -->
               </label>
               <?php if (!$readonly) { ?>
                 <input id="videos" class="file-input file-input-bordered file-input-sm w-full" type="file" name="videos" onChange="set_text('videos')">
@@ -211,7 +211,7 @@ if (!$readonly) {
           </div>
           <div class="flex flex-col gap-2 bg-base-100 rounded-lg p-4">
             <label class="label gap-2">
-              <span class="label-text flex-1">針對個別課堂實施成果(文字200以上加照片)：</span>
+              <span class="label-text flex-1">針對個別課堂實施成果(文字200以上加照片)</span>
               <span class="label-text-alt text-error">必填欄位</span>
             </label>
             <?php if (!$readonly) { ?>

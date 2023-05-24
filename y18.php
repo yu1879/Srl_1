@@ -110,7 +110,7 @@ if (!$readonly) {
     <div id="top" class="p-4 max-w-3xl mx-auto bg-base-200 lg:rounded-xl">
       <div class="flex flex-wrap gap-2 items-center justify-between">
         <h1 class="text-2xl">公開授課</h1>
-        <h3 class="text-xl text-error">* 請填寫''當月份''數值，非累計值 *</h3>
+        <!-- <h3 class="text-xl text-error">* 請填寫''當月份''數值，非累計值 *</h3> -->
       </div>
 
       <form class="form-control" name="form" method="post" enctype="multipart/form-data" action="./y14.php#top">
@@ -180,10 +180,15 @@ if (!$readonly) {
         </div>
         <div class="mt-2 flex flex-col gap-2 bg-base-100 rounded-lg p-4">
           <label class="label gap-2">
-            <span class="label-text flex-1">文字說明(200字以上)：</span>
-            <span class="label-text-alt text-error">必填欄位</span>
+            <span class="label-text flex-1">文字說明(200字以上)：僅限PDF檔</span>
+            <!-- <span class="label-text-alt text-error">必填欄位</span> -->
           </label>
-          <textarea class="textarea textarea-bordered w-full rounded-lg text-lg" rows="5" name="text" minlength="200" required <?php if ($readonly) echo 'disabled' ?>><?= $text ?></textarea>
+                      <?php if (!$readonly) { ?>
+              <input id="report" class="file-input file-input-bordered file-input-sm w-full" type="file" name="report" required accept=".pdf" onChange="set_text('report')">
+              <p id="report_text" class="text-base opacity-50"></p>
+            <?php } ?>
+
+          <!-- <textarea class="textarea textarea-bordered w-full rounded-lg text-lg" rows="5" name="text" minlength="200" required <?php if ($readonly) echo 'disabled' ?>><?= $text ?></textarea> -->
         </div>
 
         <?php if (!$readonly) { ?>

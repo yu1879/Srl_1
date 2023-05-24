@@ -81,16 +81,16 @@ else if($project === '112-113年5G新科技學習示範學校計畫')
     $conseling = select($connect, 'conseling', '*', $conditions);
     $result = select($connect, 'result', '*', $conditions);
     if (!($status === '0' xor count($goal) === 0))
-    {
-        $data['目標值'] = $goal;
-    }
+    // {
+    //     $data['目標值'] = $goal;
+    // }
     if (!($status === '0' xor count($teacher) === 0))
     {
         $data['教師培訓'] = $teacher;
     }
     if (!($status === '0' xor count($application) === 0))
     {
-        $data['新科技應用'] = $application;
+        $data['公開授課'] = $application;
     }
     if (!($status === '0' xor count($public) === 0))
     {
@@ -104,13 +104,17 @@ else if($project === '112-113年5G新科技學習示範學校計畫')
     {
         $data['成果展現與推廣活動'] = $result;
     }
+    if (!($status === '0' xor count($result) === 0))
+    {
+        $data['成效評估'] = $result;
+    }
     $pages = array(
-        '目標值' => 'y15.php',
         '教師培訓' => 'y16.php',
         '新科技應用' => 'y17.php',
         '公開授課' => 'y18.php',
         '入校輔導' => 'y19.php',
-        '成果展現與推廣活動' => 'y20.php'
+        '成果展現與推廣活動' => 'y20.php',
+        '成效評估' => 'y28.php'
     );
 }
 ?>

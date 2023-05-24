@@ -107,7 +107,7 @@ if (!$readonly) {
 
     <div id="top" class="p-4 max-w-3xl mx-auto bg-base-200 lg:rounded-xl">
       <div class="flex flex-wrap gap-2 items-center justify-between">
-        <h1 class="text-2xl">新科技應用</h1>
+        <h1 class="text-2xl">主播端環境建置</h1>
         <h3 class="text-xl text-error">* 請填寫''當月份''數值，非累計值 *</h3>
       </div>
 

@@ -264,7 +264,7 @@ if (!$readonly) {
         <div class="mt-2 flex flex-col gap-2 bg-base-100 rounded-lg p-4">
           <label class="label gap-2">
             <span class="label-text flex-1">文字說明(200字以上)：</span>
-            <span class="label-text-alt text-error">必填欄位</span>
+            <!-- <span class="label-text-alt text-error">必填欄位</span> -->
           </label>
           <textarea class="textarea textarea-bordered w-full rounded-lg text-lg" rows="5" name="content" minlength="200" required <?php if ($readonly) echo 'disabled' ?>><?= $content ?></textarea>
         </div>

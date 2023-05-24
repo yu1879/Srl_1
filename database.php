@@ -3,7 +3,7 @@ function connect_sql()
 {
     $server_name = '127.0.0.1';
     $username = 'root';
-    $password = '';
+    $password = 'yu850526';
     $db_name = 'srl';
 
     $connect = new mysqli($server_name, $username, $password, $db_name);
